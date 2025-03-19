@@ -13,8 +13,8 @@ function TodoList() {
     setTasks(tasks.filter((_, i) => i !== index));
   };
   return (
-    <div className="bg-purple-300 w-[70%] h-100vh m-auto ">
-      <h1 className="text-center">To-DO-List-App</h1>
+    <div className="bg-white w-[70%] h-100vh m-auto border rounded ">
+      <h1 className="text-center text-pink-700 text-4xl m-6">To-DO-List-App</h1>
       <div className="text-center space-x-1">
         <input
           className="w-90 p-2 border-2 rounded-3xl"
@@ -30,15 +30,20 @@ function TodoList() {
           Add Task
         </button>
       </div>
-      <ul className="bg-gray-700 text-white w-[90%] m-auto">
+      <div className="text-center m-4 text-white ">
+        <button className="bg-green-700 text-2xl p-2 border rounded-2xl">
+          Save to the local storage
+        </button>
+      </div>
+      <ul className="text-white w-[90%] m-auto">
         {tasks.map((task, index) => (
           <li
-            className="flex justify-between border-2 rounded-3xl m-2 p-4 text-2xl"
+            className="bg-gray-700 flex justify-between border-2 rounded-3xl m-2 p-4 text-2xl hover:bg-black"
             key={index}
           >
             {task.text}
             <button onClick={() => deleteTask(index)}>
-              <span className="bg-red-600 text-3xl border-0">Delete</span>
+              <span className="bg-red-600 text-3xl border rounded">Delete</span>
             </button>
           </li>
         ))}
