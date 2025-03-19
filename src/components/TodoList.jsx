@@ -1,9 +1,16 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MdDelete } from "react-icons/md";
 function TodoList() {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(() => {
+    const savedTasks = localStorage.getItem("tasks");
+    return savedTasks ? JSON.parse(savedTasks) : [];
+  });
   const [newTask, setNewTask] = useState("");
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
+
   function addTask() {
     if (newTask.trim() !== "") {
       setTasks([...tasks, { text: newTask, completed: false }]);
@@ -12,6 +19,13 @@ function TodoList() {
   }
   const deleteTask = (index) => {
     setTasks(tasks.filter((_, i) => i !== index));
+  };
+  const toggleComplete = (index) => {
+    setTasks(
+      tasks.map((task, i) =>
+        i === index ? { ...task, completed: !task.completed } : task
+      )
+    );
   };
   return (
     <div className="bg-white w-[70%] h-100vh m-auto border rounded ">
@@ -26,7 +40,7 @@ function TodoList() {
         />
         <button
           onClick={addTask}
-          className="bg-indigo-600 p-2 border rounded-2xl"
+          className="bg-indigo-600 p-2 border rounded-2xl hover:scale-110"
         >
           Add Task
         </button>
@@ -37,6 +51,12 @@ function TodoList() {
             className="bg-gray-700 flex justify-between border-2 rounded-3xl m-2 p-4 text-2xl hover:bg-black"
             key={index}
           >
+            <input
+              type="checkbox"
+              checked={task.completed}
+              onChange={() => toggleComplete(index)}
+            />
+
             {task.text}
             <button onClick={() => deleteTask(index)}>
               <span>
