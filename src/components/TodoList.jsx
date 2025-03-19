@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { MdDelete } from "react-icons/md";
 function TodoList() {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
@@ -43,7 +44,9 @@ function TodoList() {
           >
             {task.text}
             <button onClick={() => deleteTask(index)}>
-              <span className="bg-red-600 text-3xl border rounded">Delete</span>
+              <span>
+                <MdDelete />
+              </span>
             </button>
           </li>
         ))}
